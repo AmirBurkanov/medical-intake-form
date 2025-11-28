@@ -1,32 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Patient Intake Form</title>
+  <title>Patient Intake Form</title>
 </head>
 <body>
-<h2>Patient Registration</h2>
-<form>
-<label>Full Name:</label><br>
-<input type="text" name="name"><br><br>
+  <h2>Patient Registration</h2>
 
-<label>Age:</label><br>
-<input type="number" name="age"><br><br>
+  <form id="patient-form">
+    <label>Full Name:</label><br>
+    <input type="text" name="name" required><br><br>
+    <label>Age:</label><br>
+    <input type="number" name="age" required><br><br>
+    <label>Gender:</label><br>
+    <select name="gender" required>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select><br><br>
+    <label>Symptoms:</label><br>
+    <textarea name="symptoms" rows="4" cols="40"></textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
 
-<label>Gender:</label><br>
-<select>
-<option>Male</option>
-<option>Female</option>
-<option>Other</option>
-</select><br><br>
+  <footer>
+    <p style="margin-top:40px;">Made for Medical GCP Training</p>
+  </footer>
 
-<label>Symptoms:</label><br>
-<textarea rows="4" cols="40"></textarea><br><br>
+  <!-- Вставляем сюда скрипт Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-<button type="submit">Submit</button>
-</form>
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9w-iHSWzf5RpnE47gll8JJCC4sgJcahU",
+      authDomain: "medical-intake-form.firebaseapp.com",
+      projectId: "medical-intake-form",
+      storageBucket: "medical-intake-form.firebasestorage.app",
+      messagingSenderId: "672968721864",
+      appId: "1:672968721864:web:7b12b6a71dd6140432acfd"
+    };
 
-<footer>
-<p style="margin-top:40px;">Made for Medical GCP Training</p>
-</footer>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById('patient-form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: form.name.value,
+        age: parseInt(form.age.value),
+        gender: form.gender.value,
+        symptoms: form.symptoms.value,
+        createdAt: new Date()
+      };
+
+      try {
+        await addDoc(collection(db, "patients"), data);
+        alert("Patient data saved!");
+        form.reset();
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        alert("Error saving data");
+      }
+    });
+  </script>
 </body>
 </html>
