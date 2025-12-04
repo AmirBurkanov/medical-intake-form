@@ -1,31 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Patient Intake Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      background: white;
+      margin: 50px auto;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border-top: 4px solid #2a7ddf;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2a7ddf;
+      font-weight: 700;
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2a7ddf;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #1d64b5;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Patient Registration</h2>
 
-  <form id="patient-form">
-    <label>Full Name:</label><br>
-    <input type="text" name="name" required><br><br>
-    <label>Age:</label><br>
-    <input type="number" name="age" required><br><br>
-    <label>Gender:</label><br>
-    <select name="gender" required>
-      <option>Male</option>
-      <option>Female</option>
-      <option>Other</option>
-    </select><br><br>
-    <label>Symptoms:</label><br>
-    <textarea name="symptoms" rows="4" cols="40"></textarea><br><br>
-    <button type="submit">Submit</button>
-  </form>
+  <div class="container">
+    <h2>Patient Registration</h2>
+
+    <form id="patient-form">
+      <label>Full Name</label>
+      <input type="text" name="name" required>
+
+      <label>Age</label>
+      <input type="number" name="age" required>
+
+      <label>Gender</label>
+      <select name="gender" required>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+
+      <label>Symptoms</label>
+      <textarea name="symptoms" rows="4"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
   <footer>
-    <p style="margin-top:40px;">Made for Medical GCP Training</p>
+    Made for Medical GCP Training
   </footer>
 
+  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
@@ -43,6 +115,7 @@
     const db = getFirestore(app);
 
     const form = document.getElementById('patient-form');
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -64,8 +137,6 @@
       }
     });
   </script>
+
 </body>
 </html>
-
-
-
